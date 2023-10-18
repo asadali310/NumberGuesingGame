@@ -23,6 +23,4 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.MapEmployeeEndpoints();
-
 app.Run();

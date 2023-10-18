@@ -10,7 +10,7 @@ namespace Webapiapplication.Controllers
         private static List<Student> Students = new List<Student>();   
         private static readonly string[] Names = new[]
         {
-        "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
+        "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching" , "Aamir"
         };
 
         private readonly ILogger<StudentController> _logger;
@@ -80,3 +80,4 @@ namespace Webapiapplication.Controllers
 
     }
 }
+
