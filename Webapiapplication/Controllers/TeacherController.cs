@@ -20,7 +20,7 @@ namespace Webapiapplication.Controllers
                 _logger = logger;
             }
 
-            [HttpGet(Name = "GetTeachers")]
+            [HttpGet]
             public IEnumerable<Teacher> Get()
             {
                 return Enumerable.Range(1, 3).Select(index => new Teacher

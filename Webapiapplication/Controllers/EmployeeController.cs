@@ -1,43 +1,63 @@
-﻿using Webapiapplication;
-namespace Webapiapplication.Controllers;
+﻿using Microsoft.AspNetCore.Mvc;
 
-public static class EmployeeController
+namespace Webapiapplication.Controllers
 {
-    public static void MapEmployeeEndpoints (this IEndpointRouteBuilder routes)
+    [ApiController]
+    [Route("[controller]")]
+    public class EmployeeController : ControllerBase
     {
-        routes.MapGet("/api/Employee", () =>
+        private static List<Employee> employees = new List<Employee>();
+        private static readonly string[] Names = new[]
         {
-            return new [] { new Employee() };
-        })
-        .WithName("GetAllEmployees")
-        .Produces<Employee[]>(StatusCodes.Status200OK);
+        "Asad", "Aamir","Ayan","Rahman","Jawad","Asalm"
+        };
+        private static readonly int[] Ages = new[]
+        { 1, 2, 3, 4, 4, 5, 5, 6, 7, 7, 8
+        };
+        private static readonly int[] Ids= new[]
+        { 12, 22, 33, 44, 45, 15, 35, 16, 17, 37,28
+        };
 
-        routes.MapGet("/api/Employee/{id}", (int id) =>
-        {
-            //return new Employee { ID = id };
-        })
-        .WithName("GetEmployeeById")
-        .Produces<Employee>(StatusCodes.Status200OK);
+        private readonly ILogger<EmployeeController> _logger;
 
-        routes.MapPut("/api/Employee/{id}", (int id, Employee input) =>
+        public EmployeeController(ILogger<EmployeeController> logger)
         {
-            return Results.NoContent();
-        })
-        .WithName("UpdateEmployee")
-        .Produces(StatusCodes.Status204NoContent);
+            _logger = logger;
+        }
 
-        routes.MapPost("/api/Employee/", (Employee model) =>
+        [HttpGet]
+        public IEnumerable<Employee> Get()
         {
-            //return Results.Created($"/api/Employees/{model.ID}", model);
-        })
-        .WithName("CreateEmployee")
-        .Produces<Employee>(StatusCodes.Status201Created);
 
-        routes.MapDelete("/api/Employee/{id}", (int id) =>
+            
+            return Enumerable.Range(1, 5).Select( index => 
+            {
+                
+                int v = Random.Shared.Next(16, 30);
+                return new Employee
+                {
+                    EmployeeNmae = Names[Random.Shared.Next(Names.Length)],
+                    EmployeeId = Ids[Random.Shared.Next(Ids.Length)],
+                    EmployeeAge = v
+                };
+            })
+            .ToArray();
+        }
+        [HttpPost]
+        public Employee Post()
         {
-            //return Results.Ok(new Employee { ID = id });
-        })
-        .WithName("DeleteEmployee")
-        .Produces<Employee>(StatusCodes.Status200OK);
+            var std = new Employee
+            {
+                EmployeeNmae = Names[Random.Shared.Next(Names.Length)],
+                EmployeeId = Ids[Random.Shared.Next(Ids.Length)],
+                EmployeeAge = Random.Shared.Next(16, 59)
+            };
+            employees.Add(std);
+           return  std;
+        }
+       
+  
     }
+
 }
+
